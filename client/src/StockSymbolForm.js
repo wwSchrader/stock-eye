@@ -20,9 +20,10 @@ class StockSymbolForm extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    fetch('/api/addStock?symbol=' + this.state.stockSymbol, {
-      method: 'GET',
+    fetch('/stocks/addStock', {
+      method: 'PUT',
       headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({stockSymbol: this.state.stockSymbol}),
     })
     .then((resp) => console.log('Stock symbol sent'));
   }

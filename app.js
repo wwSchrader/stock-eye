@@ -1,3 +1,7 @@
+if ((process.env.NODE_ENV || 'development') === 'development') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
@@ -23,13 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.io = io;
 
 app.set('socketio', io);
-app.use('/api/', index);
+app.use(require('./routes'));
 
 // setup mongodb database
 mongoose.Promise = global.Promise;
-mongoose.connect(pocess.env.MONGO_URI, {
-  useMongoClient: true,
-});
+mongoose.connect(process.env.MONGODB_URI, {});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

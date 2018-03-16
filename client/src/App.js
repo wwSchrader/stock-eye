@@ -22,7 +22,7 @@ class App extends Component {
     this.getExpressMessage();
   }
   getExpressMessage() {
-    fetch('/api/')
+    fetch('/message')
     .then((resp) => resp.json())
     .then((res) => {
       this.setState({expressMessage: res.title});
