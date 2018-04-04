@@ -29,7 +29,8 @@ class StockSymbolForm extends Component {
     .then((resp) => console.log('Stock symbol sent'));
   }
 
-  onDeleteButtonPress() {
+  onDeleteButtonPress(e) {
+    e.preventDefault();
     fetch('/stocks/deleteStock', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'},

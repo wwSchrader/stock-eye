@@ -40,6 +40,29 @@ router.put('/addStock', function(req, res, next) {
     });
 });
 
+router.delete('/deleteStock', function(req, res, next) {
+  let stockSymbol = req.body.stockSymbol;
+  Stock.findOne({stockId: stockSymbol}, (err, stock) => {
+    if (err) {
+      console.log('Error in searching for stock to delete: ' + err);
+      res.sendStatus(500);
+    } else if (stock) {
+      Stock.remove({stockId: stockSymbol}, (errMsg) => {
+        if (errMsg) {
+          console.log('Error in deleting stock: ' + errMsg);
+          res.sendStatus(500);
+        } else {
+          console.log('Stock Removed!');
+          res.sendStatus(200);
+        }
+      });
+    } else {
+      console.log('Stock not found!');
+      res.sendStatus(500);
+    }
+  });
+});
+
 function addStock(stockHistory) {
   Stock.findOne({stockId: stockHistory['Meta Data']['2. Symbol']},
     (err, stock) => {
