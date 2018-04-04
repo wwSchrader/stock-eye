@@ -41,7 +41,6 @@ router.put('/addStock', function(req, res, next) {
 });
 
 function addStock(stockHistory) {
-  console.log(stockHistory['Meta Data']['2. Symbol']);
   Stock.findOne({stockId: stockHistory['Meta Data']['2. Symbol']},
     (err, stock) => {
     if (stock) {

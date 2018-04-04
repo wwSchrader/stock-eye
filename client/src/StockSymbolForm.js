@@ -9,6 +9,7 @@ class StockSymbolForm extends Component {
 
     this.onStockSymbolChange = this.onStockSymbolChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onDeleteButtonPress = this.onDeleteButtonPress.bind(this);
   }
 
   onStockSymbolChange(e) {
@@ -28,6 +29,15 @@ class StockSymbolForm extends Component {
     .then((resp) => console.log('Stock symbol sent'));
   }
 
+  onDeleteButtonPress() {
+    fetch('/stocks/deleteStock', {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({stockSymbol: this.state.stockSymbol}),
+    })
+    .then((resp) => console.log('Stock delete sent'));
+  }
+
   render() {
     return (
       <form onSubmit={this.onFormSubmit}>
@@ -42,6 +52,7 @@ class StockSymbolForm extends Component {
             type='submit'
             value='Add'
         />
+        <button onClick={this.onDeleteButtonPress}>Remove</button>
       </form>
     );
   }
