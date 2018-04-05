@@ -10,22 +10,34 @@ class App extends Component {
     this.state = {
       expressMessage: '',
       stockSymbol: 'no stock symbol yet',
+      allStockHistory: [],
     };
 
     subscribeToStockSymbolMessages(
       (err, stockSymbol) => this.setState({stockSymbol}));
 
     this.getExpressMessage = this.getExpressMessage.bind(this);
+    this.getAllStockHistory = this.getAllStockHistory.bind(this);
   }
 
   componentDidMount() {
     this.getExpressMessage();
+    this.getAllStockHistory();
   }
   getExpressMessage() {
     fetch('/message')
     .then((resp) => resp.json())
     .then((res) => {
       this.setState({expressMessage: res.title});
+    });
+  }
+
+  getAllStockHistory() {
+    fetch('/stocks/getAllHistory')
+    .then((resp) => resp.json())
+    .then((res) => {
+      this.setState({allStockHistory: res});
+      console.log('History received: ' + res[0]);
     });
   }
 

@@ -63,6 +63,18 @@ router.delete('/deleteStock', function(req, res, next) {
   });
 });
 
+router.get('/getAllHistory', function(req, res, next) {
+  Stock.find({}, (err, allStocks) => {
+    if (err) {
+      console.log('Error in searching for all stock history: ' + err);
+      res.sendStatus(500);
+    } else {
+      console.log('Retrieved all stock history: ' + allStocks);
+      res.json(allStocks);
+    }
+  });
+});
+
 function addStock(stockHistory) {
   Stock.findOne({stockId: stockHistory['Meta Data']['2. Symbol']},
     (err, stock) => {
