@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {subscribeToStockSymbolMessages} from './api';
+import {
+  subscribeToStockSymbolMessages,
+  subscribeToAddStockHistory}
+  from './api';
 import StockSymbolForm from './StockSymbolForm';
 import StockGraph from './StockGraph';
 
@@ -16,6 +19,11 @@ class App extends Component {
 
     subscribeToStockSymbolMessages(
       (err, stockSymbol) => this.setState({stockSymbol}));
+
+    subscribeToAddStockHistory(
+      (err, newStockHistory) => this.setState({
+        allStockHistory: this.state.allStockHistory.concat(newStockHistory)})
+    );
 
     this.getExpressMessage = this.getExpressMessage.bind(this);
     this.getAllStockHistory = this.getAllStockHistory.bind(this);

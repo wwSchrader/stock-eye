@@ -27,7 +27,7 @@ router.put('/addStock', function(req, res, next) {
         // simply log the response to console
         console.log('Stock history received!');
         console.log(stockHistory['Meta Data']);
-        if (!addStock(stockHistory)) {
+        if (!addStock(stockHistory, req)) {
           res.sendStatus(200);
         } else {
           res.sendStatus(500);
@@ -75,7 +75,7 @@ router.get('/getAllHistory', function(req, res, next) {
   });
 });
 
-function addStock(stockHistory) {
+function addStock(stockHistory, req) {
   Stock.findOne({stockId: stockHistory['Meta Data']['2. Symbol']},
     (err, stock) => {
     if (stock) {
@@ -108,6 +108,9 @@ function addStock(stockHistory) {
           console.log('Saving new history failed: ' + err);
           return false;
         } else {
+          // broadcast new stock history to all users
+          let io = req.app.get('socketio');
+          io.emit('addStockHistory', newStockHistory);
           return true;
         }
       });

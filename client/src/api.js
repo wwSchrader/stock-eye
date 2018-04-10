@@ -5,4 +5,8 @@ export function subscribeToStockSymbolMessages(cb) {
   socket.on('stockMessage', (stockSymbol) => cb(null, stockSymbol));
 }
 
-export default {subscribeToStockSymbolMessages};
+export function subscribeToAddStockHistory(cb) {
+  socket.on('addStockHistory', (newStockHistory) => cb(null, newStockHistory));
+}
+
+export default {subscribeToStockSymbolMessages, subscribeToAddStockHistory};

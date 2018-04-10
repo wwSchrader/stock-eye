@@ -27,9 +27,11 @@ class StockGraph extends Component {
     this.setState({allStockHistory: newProps.allStockHistory});
   }
 
+  // to supply the crosshair the data points
   onNearestX(value, {index}) {
     this.setState({crosshairValues: this.state.allStockHistory.map((data) => {
-      return {x: new Date(data.history[index].date).getTime(), y: data.history[index].price};
+      return {x: new Date(data.history[index].date).getTime(),
+        y: data.history[index].price};
     })});
   }
 
@@ -37,10 +39,12 @@ class StockGraph extends Component {
     this.setState({crosshairValues: []});
   }
 
+  // to return a title that produces a readable date string
   crosshairTitleModifier(dataPoints) {
     return {title: 'Date', value: new Date(dataPoints[0].x).toDateString()};
   }
 
+  // to lable each stock by their stock symbol
   crosshairItemsModifier(dataPoints) {
     return dataPoints.map((data, index) => {
       return {title: this.state.allStockHistory[index].stockId, value: data.y};
@@ -61,9 +65,13 @@ class StockGraph extends Component {
         <YAxis />
         {this.state.allStockHistory.map((stock) => {
           let individualStockData = stock.history.map((day) => {
-            return {x: new Date(day.date).getTime(), y: day.price, stockSymbol: day.stockId};
+            return {x: new Date(day.date).getTime(),
+              y: day.price, stockSymbol: day.stockId};
           });
-          return <LineSeries key={stock.stockId} data={individualStockData} onNearestX={this.onNearestX}/>;
+          return <LineSeries key={stock.stockId}
+              data={individualStockData}
+              onNearestX={this.onNearestX}
+                 />;
         })}
         <Crosshair
             values={this.state.crosshairValues}
