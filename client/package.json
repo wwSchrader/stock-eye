@@ -6,6 +6,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
+    "react-vis": "^1.9.2",
     "socket.io-client": "^2.0.4"
   },
   "scripts": {

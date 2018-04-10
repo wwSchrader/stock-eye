@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {subscribeToStockSymbolMessages} from './api';
 import StockSymbolForm from './StockSymbolForm';
+import StockGraph from './StockGraph';
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class App extends Component {
     this.getExpressMessage();
     this.getAllStockHistory();
   }
+
   getExpressMessage() {
     fetch('/message')
     .then((resp) => resp.json())
@@ -37,7 +39,7 @@ class App extends Component {
     .then((resp) => resp.json())
     .then((res) => {
       this.setState({allStockHistory: res});
-      console.log('History received: ' + res[0]);
+      console.log('History received!');
     });
   }
 
@@ -55,6 +57,7 @@ class App extends Component {
         <p>
           Stock symbol: {this.state.stockSymbol}
         </p>
+        <StockGraph allStockHistory={this.state.allStockHistory} />
       </div>
     );
   }

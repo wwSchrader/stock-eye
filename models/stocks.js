@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const stockSchema = new Schema({
   stockId: String,
   history: [{
-    date: Date,
+    date: '',
     price: Number,
   }],
 });

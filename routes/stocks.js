@@ -91,8 +91,9 @@ function addStock(stockHistory) {
       let datesAndPrices = Object
         .entries(stockHistory['Time Series (Daily)'])
         .map(([key, value]) => {
+          console.log("Slice value: " + key.slice(0, 10));
         return {
-          date: key,
+          date: key.slice(0, 10),
           price: value['4. close'],
         };
       });
