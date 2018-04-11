@@ -26,7 +26,6 @@ router.put('/addStock', function(req, res, next) {
       } else {
         // simply log the response to console
         console.log('Stock history received!');
-        console.log(stockHistory['Meta Data']);
         if (!addStock(stockHistory, req)) {
           res.sendStatus(200);
         } else {
@@ -72,7 +71,7 @@ router.get('/getAllHistory', function(req, res, next) {
       console.log('Error in searching for all stock history: ' + err);
       res.sendStatus(500);
     } else {
-      console.log('Retrieved all stock history: ' + allStocks);
+      console.log('Retrieved all stock history.');
       res.json(allStocks);
     }
   });
@@ -94,7 +93,6 @@ function addStock(stockHistory, req) {
       let datesAndPrices = Object
         .entries(stockHistory['Time Series (Daily)'])
         .map(([key, value]) => {
-          console.log("Slice value: " + key.slice(0, 10));
         return {
           date: key.slice(0, 10),
           price: value['4. close'],

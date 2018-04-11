@@ -52,7 +52,6 @@ class StockGraph extends Component {
   }
 
   render() {
-    console.log(this.state.crosshairValues);
     return (
       <FlexibleWidthXYPlot
           height={400}
