@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {
-  subscribeToStockSymbolMessages,
   subscribeToAddStockHistory,
   subscribeToDeleteStockHistory}
   from './api';
@@ -14,12 +13,8 @@ class App extends Component {
     super(props);
     this.state = {
       expressMessage: '',
-      stockSymbol: 'no stock symbol yet',
       allStockHistory: [],
     };
-
-    subscribeToStockSymbolMessages(
-      (err, stockSymbol) => this.setState({stockSymbol}));
 
     subscribeToAddStockHistory(
       (err, newStockHistory) => this.setState({
@@ -29,12 +24,13 @@ class App extends Component {
     subscribeToDeleteStockHistory(
       (err, stockSymbol) => {
         let indexOfStockToRemove = this.state.allStockHistory
-          .findIndex((allStockHistory) => allStockHistory.stockId === stockSymbol);
-        console.log("Stock to delete: " + stockSymbol);
-        console.log("Index to remove:" + indexOfStockToRemove);
+          .findIndex((allStockHistory) => {
+            return allStockHistory.stockId === stockSymbol;
+          });
+        // copy all stock history array
         let newStockHistoryArray = this.state.allStockHistory.slice();
-        newStockHistoryArray.splice(indexOfStockToRemove, 1)
-
+        // remove element from new array
+        newStockHistoryArray.splice(indexOfStockToRemove, 1);
         this.setState({allStockHistory: newStockHistoryArray});
       }
     );
@@ -76,9 +72,6 @@ class App extends Component {
           {this.state.expressMessage}
         </p>
         <StockSymbolForm/>
-        <p>
-          Stock symbol: {this.state.stockSymbol}
-        </p>
         <StockGraph allStockHistory={this.state.allStockHistory} />
       </div>
     );

@@ -8,12 +8,4 @@ router.get('/message', function(req, res, next) {
 
 router.use('/stocks', require('./stocks.js'));
 
-router.get('/addStock', function(req, res, next) {
-  console.log(req.query.symbol);
-  let io = req.app.get('socketio');
-  io.emit('stockMessage', req.query.symbol);
-
-  res.sendStatus(200);
-});
-
 module.exports = router;
