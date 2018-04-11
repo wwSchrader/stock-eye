@@ -9,4 +9,11 @@ export function subscribeToAddStockHistory(cb) {
   socket.on('addStockHistory', (newStockHistory) => cb(null, newStockHistory));
 }
 
-export default {subscribeToStockSymbolMessages, subscribeToAddStockHistory};
+export function subscribeToDeleteStockHistory(cb) {
+  socket.on('deleteStockHistory', (stockSymbol) => cb(null, stockSymbol));
+}
+
+export default {
+    subscribeToStockSymbolMessages,
+    subscribeToAddStockHistory,
+    subscribeToDeleteStockHistory};

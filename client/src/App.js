@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import {
   subscribeToStockSymbolMessages,
-  subscribeToAddStockHistory}
+  subscribeToAddStockHistory,
+  subscribeToDeleteStockHistory}
   from './api';
 import StockSymbolForm from './StockSymbolForm';
 import StockGraph from './StockGraph';
@@ -23,6 +24,19 @@ class App extends Component {
     subscribeToAddStockHistory(
       (err, newStockHistory) => this.setState({
         allStockHistory: this.state.allStockHistory.concat(newStockHistory)})
+    );
+
+    subscribeToDeleteStockHistory(
+      (err, stockSymbol) => {
+        let indexOfStockToRemove = this.state.allStockHistory
+          .findIndex((allStockHistory) => allStockHistory.stockId === stockSymbol);
+        console.log("Stock to delete: " + stockSymbol);
+        console.log("Index to remove:" + indexOfStockToRemove);
+        let newStockHistoryArray = this.state.allStockHistory.slice();
+        newStockHistoryArray.splice(indexOfStockToRemove, 1)
+
+        this.setState({allStockHistory: newStockHistoryArray});
+      }
     );
 
     this.getExpressMessage = this.getExpressMessage.bind(this);

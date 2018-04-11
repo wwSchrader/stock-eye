@@ -53,6 +53,9 @@ router.delete('/deleteStock', function(req, res, next) {
           res.sendStatus(500);
         } else {
           console.log('Stock Removed!');
+          // broadcast new stock history to all users
+          let io = req.app.get('socketio');
+          io.emit('deleteStockHistory', stockSymbol);
           res.sendStatus(200);
         }
       });
