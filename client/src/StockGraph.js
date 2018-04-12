@@ -47,7 +47,11 @@ class StockGraph extends Component {
   // to lable each stock by their stock symbol
   crosshairItemsModifier(dataPoints) {
     return dataPoints.map((data, index) => {
-      return {title: this.state.allStockHistory[index].stockId, value: data.y};
+      let crosshairItemTitle = '';
+      if (typeof this.state.allStockHistory[index] !== 'undefined') {
+        crosshairItemTitle = this.state.allStockHistory[index].stockId;
+      }
+      return {title: crosshairItemTitle, value: data.y};
     });
   }
 
@@ -62,15 +66,22 @@ class StockGraph extends Component {
         <HorizontalGridLines />
         <XAxis />
         <YAxis />
-        {this.state.allStockHistory.map((stock) => {
+        {this.state.allStockHistory.map((stock, index) => {
           let individualStockData = stock.history.map((day) => {
             return {x: new Date(day.date).getTime(),
               y: day.price, stockSymbol: day.stockId};
           });
-          return <LineSeries key={stock.stockId}
-              data={individualStockData}
-              onNearestX={this.onNearestX}
-                 />;
+          // only attach onNearestX to first series
+          if (index === 0) {
+            return <LineSeries key={stock.stockId}
+                data={individualStockData}
+                onNearestX={this.onNearestX}
+                   />;
+          } else {
+            return <LineSeries key={stock.stockId}
+                data={individualStockData}
+                   />;
+          }
         })}
         <Crosshair
             values={this.state.crosshairValues}
