@@ -67,6 +67,7 @@ class StockGraph extends Component {
         <XAxis />
         <YAxis />
         {this.state.allStockHistory.map((stock, index) => {
+          let animationType = 'wobbly';
           let individualStockData = stock.history.map((day) => {
             return {x: new Date(day.date).getTime(),
               y: day.price, stockSymbol: day.stockId};
@@ -76,10 +77,12 @@ class StockGraph extends Component {
             return <LineSeries key={stock.stockId}
                 data={individualStockData}
                 onNearestX={this.onNearestX}
+                animation={animationType}
                    />;
           } else {
             return <LineSeries key={stock.stockId}
                 data={individualStockData}
+                animation={animationType}
                    />;
           }
         })}
