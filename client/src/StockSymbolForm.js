@@ -14,7 +14,7 @@ class StockSymbolForm extends Component {
 
   onStockSymbolChange(e) {
     this.setState({
-      stockSymbol: e.target.value,
+      stockSymbol: e.target.value.toUpperCase(),
     });
   }
 
