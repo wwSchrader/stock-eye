@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {
   subscribeToAddStockHistory,
@@ -12,7 +11,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expressMessage: '',
       allStockHistory: [],
     };
 
@@ -35,21 +33,11 @@ class App extends Component {
       }
     );
 
-    this.getExpressMessage = this.getExpressMessage.bind(this);
     this.getAllStockHistory = this.getAllStockHistory.bind(this);
   }
 
   componentDidMount() {
-    this.getExpressMessage();
     this.getAllStockHistory();
-  }
-
-  getExpressMessage() {
-    fetch('/message')
-    .then((resp) => resp.json())
-    .then((res) => {
-      this.setState({expressMessage: res.title});
-    });
   }
 
   getAllStockHistory() {
@@ -64,13 +52,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          {this.state.expressMessage}
-        </p>
         <StockSymbolForm/>
         <StockGraph allStockHistory={this.state.allStockHistory} />
       </div>
