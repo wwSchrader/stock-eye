@@ -6,6 +6,7 @@ import {
   from './api';
 import StockSymbolForm from './StockSymbolForm';
 import StockGraph from './StockGraph';
+import StockLegend from './StockLegend';
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class App extends Component {
       <div className="App">
         <StockSymbolForm/>
         <StockGraph allStockHistory={this.state.allStockHistory} />
+        <StockLegend allStockHistory={this.state.allStockHistory} />
       </div>
     );
   }
